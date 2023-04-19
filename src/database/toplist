@@ -1,0 +1,12 @@
+import knex from "knex";
+
+export default class ToplistData {
+    static async addMovieIdToToplist(userId : number, movieId : number){
+        try{
+           knex("Toplist").raw('UPDATE Toplist SET numbers = array_append(numbers, ?) WHERE id = ?', [movieId, userId]);
+        }catch(error){
+            console.log(error);
+            throw error;
+        }
+    }
+}
