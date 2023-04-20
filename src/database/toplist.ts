@@ -3,10 +3,10 @@ import knex from "knex";
 export default class ToplistData {
     static async addMovieIdToToplist(userId : number, movieId : number){
         try{
-           knex("Toplist").raw('UPDATE Toplist SET numbers = array_append(numbers, ?) WHERE id = ?', [movieId, userId]);
+           knex("Toplist").insert({user_id: userId, imdb_movie_id: movieId}).then(()=> {return true;});
         }catch(error){
             console.log(error);
-            throw error;
+            return false;
         }
     }
 }
