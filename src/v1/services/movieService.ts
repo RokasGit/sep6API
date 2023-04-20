@@ -1,19 +1,16 @@
 import movieDB from "../../database/movie"
 
-
-const getAllMovies = () => {
-    return ;
-};
-const getOneMovie = async (title : string) => {
-    try{
-        const movie = await movieDB.getOneMovie(title);
-        return movie;
-    }catch(error) {
-        console.log(error);
+export default class MovieService {
+    static async getAllMovies() : Promise<Array<String>> {
+        return ["Get All Movies"];
+    }
+    static async getOneMovie(title:string) : Promise<String> {
+            try{
+                const movie = await movieDB.getOneMovie(title);
+                return movie;
+            }catch(error) {
+                console.log(error);
+                throw error
+            }
     }
 }
-
-export = {
-    getAllMovies,
-    getOneMovie
-};

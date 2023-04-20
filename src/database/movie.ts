@@ -13,14 +13,4 @@ export default class MovieData {
         }
     }
 }
-// const getOneMovie = (title : string) => {
-//     axios.get(`${db.OMDB_API_URL}t={title}`).then(response => {
-//         console.log(response.data);
-//         return response.data;
-//     }).catch(error => {
-//         console.log(`Error happened handling getOneMovie request ${error}`);
-//     })
-// };
-
-// export = {getOneMovie};
 
