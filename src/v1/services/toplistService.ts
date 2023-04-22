@@ -1,13 +1,12 @@
 import toplistDB from "../../database/toplist"
 
-const addMovieIdBasedOnUser = async (userId : number, movieId : number) => {
-    try{
-        return await toplistDB.addMovieIdToToplist(userId, movieId);
-    }catch(error) {
-        console.log(error);
-    }
+export default class ToplistService {
+    static async addMovieIdBasedOnUser(userId : number, movieId : number) : Promise<boolean> {
+        try{
+            return await toplistDB.addMovieIdToToplist(userId, movieId);
+        }catch(error) {
+            console.log(error);
+            return false;
+        }
+    };
 }
-
-export = {
-    addMovieIdBasedOnUser
-};
