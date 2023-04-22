@@ -1,11 +1,11 @@
 {
   "name": "sep6api",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Api for sep6 project to provide movies, actors etc.",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node dist/index.js",
+    "start": "tsc -w & nodemon dist/index.js",
     "dev": "tsc -w & nodemon dist/index.js"
   },
   "keywords": [],
@@ -27,6 +27,7 @@
     "@types/knex": "^0.16.1",
     "@types/node": "^18.15.11",
     "@types/pg": "^8.6.6",
+    "nodemon": "^2.0.22",
     "typescript": "^5.0.4"
   }
 }
