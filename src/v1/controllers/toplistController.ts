@@ -3,10 +3,12 @@ import toplistService from "../services/toplistService"
 
 export default class ToplistController {
     static async addMovieIdBasedOnUserId(req : Request, res : Response) {
-            const responseFromDB = await toplistService.addMovieIdBasedOnUser(parseInt(req.params.userId), parseInt(req.body.movieId));
+            const responseFromDB = await toplistService.addMovieIdBasedOnUser(parseInt(req.params.userId), JSON.parse(req.body).ID);
             let responseBody;
             if(responseFromDB){
-                responseBody = req.body;
+                let body = JSON.parse(req.body);
+                body.BelongsToToplist = true;
+                responseBody = JSON.stringify(body);
             }
             else{
                 responseBody = undefined;
