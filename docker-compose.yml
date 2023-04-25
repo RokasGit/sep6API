@@ -10,12 +10,6 @@ services:
     volumes:
       - ./:/opt/api
 
-  web-cli:
-    image: best-movies-api
-    networks:
-      - backend
-    command: sh
-
 networks:
   backend:
     driver: bridge
