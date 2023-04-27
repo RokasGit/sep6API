@@ -6,7 +6,7 @@ export default class ToplistData {
     movieId: number
   ): Promise<boolean> {
     try {
-      const response = await db.db("Toplist").insert({
+      const response = await db.db("sep6.toplist").insert({
         user_id: userId,
         imdb_movie_id: movieId,
       });
