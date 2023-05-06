@@ -18,10 +18,20 @@ export default class ActorData {
     return Math.round(averageRating * 100) / 100;
   };
 
+  static getActorMovieNames(actorMovies: any){
+    let movies:string[] = [];
+
+    actorMovies.forEach((element: any) => {
+      movies.push(element.original_title);
+    });
+
+    return movies;
+  }
 
   static async searchActor(query: string): Promise<Actor[]> {
     try {
       const url = `${db.TMDB_BASE_URL}/search/person?api_key=${db.TMDB_API_KEY}&query=${encodeURIComponent(query)}`;
+      console.log("url: " + url);
       const response = await axios.get(url);
       const data:any = response.data;
 
@@ -34,7 +44,7 @@ export default class ActorData {
           Name: item.name,
           Popularity: item.popularity,
           AverageRating: ActorData.getAverageRating(item.known_for),
-          known_for: item.known_for
+          known_for: ActorData.getActorMovieNames(item.known_for)
         }
 
         actors.push(actor);
