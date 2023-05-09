@@ -12,3 +12,4 @@ pids
 .vscode/*
 **/dist
 **/node_modules
+db
