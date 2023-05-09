@@ -38,21 +38,22 @@ export default class UserData {
       throw error;
     }
   }
-  static async getUsers(): Promise<Array<User>> {
+  static async checkIfEmailExists(email: string): Promise<boolean> {
     try {
-      const rows = await db
-        .db<User>("sep6._user")
-        .select("username", "email", "password");
-      const response: Array<User> = [];
-      if (rows.length > 0) {
-        rows.forEach((row) => {
-          response.push({
-            username: row.username,
-            email: row.email,
-            password: row.password,
-          });
-        }, response);
-      }
+      const response = await db
+        .db("sep6._user")
+        .select("*")
+        .where("email", "=", email)
+        .then((rows) => {
+          if (rows === undefined || rows.length == 0) {
+            return false;
+          }
+          return true;
+        })
+        .catch((e) => {
+          console.log(e);
+          return false;
+        });
       return response;
     } catch (error) {
       console.log(error);

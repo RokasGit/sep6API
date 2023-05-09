@@ -28,6 +28,10 @@ export default class UserService {
     if (username.match(/[^a-zA-Z0-9]/g)) {
       throw Error("Username must not contain special characters");
     }
+    const emailExists = await db.checkIfEmailExists(email);
+    if (emailExists) {
+      throw Error("Email already exists");
+    }
     return await db.registerUser(username, password, email);
   }
 }
