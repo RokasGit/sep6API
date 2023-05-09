@@ -6,8 +6,8 @@ export default class MovieController {
     const allMovies = await movieService.getAllMovies();
     res.send({ status: "OK", data: allMovies });
   }
-  static async getOneMovie(req: Request, res: Response): Promise<void> {
-    const movie = await movieService.getOneMovie(req.params.movieTitle);
+  static async getOneMovieByTitle(req: Request, res: Response): Promise<void> {
+    const movie = await movieService.getOneMovieByTitle(req.params.movieTitle);
     res.send({ status: "OK", data: movie });
   }
 }

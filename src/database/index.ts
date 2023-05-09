@@ -6,10 +6,10 @@ const { DB_USER, DB_PASS, DB_NAME, DB_HOST, OMDB_API_URL, TMDB_API_KEY, TMDB_BAS
 const db = knex({
   client: "postgresql",
   connection: {
-    host: DB_HOST,
-    user: DB_USER,
-    password: DB_PASS,
-    database: DB_NAME,
+    host: "localhost",
+    user: "postgres",
+    password: "postgres",
+    database: "postgres",
   },
   pool: {
     min: 0,

@@ -4,6 +4,6 @@ const router = express.Router();
 
 router.get("/", movieController.getAllMovies);
 
-router.get("/:movieTitle", movieController.getOneMovie);
+router.get("/:movieTitle", movieController.getOneMovieByTitle);
 
 export = router;
