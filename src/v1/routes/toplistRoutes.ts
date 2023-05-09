@@ -3,5 +3,6 @@ import toplistController from '../controllers/toplistController';
 const router = express.Router();
 
 router.post('/:userId', toplistController.addMovieIdBasedOnUserId);
+router.get('/:userId', toplistController.getToplistBasedOnUserId);
 
 export = router;
