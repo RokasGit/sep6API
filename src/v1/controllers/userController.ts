@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import userService from "../services/userService";
+import { Request, Response } from 'express';
+import userService from '../services/userService';
 
 export default class UserController {
   static async registerUser(req: Request, res: Response): Promise<void> {
@@ -12,6 +12,18 @@ export default class UserController {
       res.status(200).json(responseFromDB);
     } catch (error) {
       res.status(400).json(error.message);
+    }
+  }
+
+  static async loginUser(req: Request, res: Response): Promise<void> {
+    try {
+      const responseFromDB = await userService.loginUser(
+        req.body.email,
+        req.body.password
+      );
+      res.status(200).json(responseFromDB);
+    } catch (error) {
+      res.status(400).json((error as Error).message);
     }
   }
 }
