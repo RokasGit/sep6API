@@ -29,4 +29,18 @@ export default class ToplistController {
         responseBody = await Promise.all(promises);
         res.send({status: "OK", data: responseBody});
     };
+
+    static async deleteMovieFromToplist(req: Request, res: Response) {
+      const responseFromDB = await toplistService.deleteMovieFromToplist(
+        parseInt(req.params.userId),
+        req.body.imdbID
+      );
+      let responseBody: String[]= [];
+      const promises: any[] = [];
+      responseFromDB.forEach( (movieId)=> {
+          promises.push( movieService.getOneMovieById(Object.entries(movieId)[0][1]));
+      });
+      responseBody = await Promise.all(promises);
+      res.status(200).json(responseBody);
+  };
 }
