@@ -11,7 +11,7 @@ export default class UserController {
       );
       res.status(200).json(responseFromDB);
     } catch (error) {
-      //res.status(400).json(error.message);
+      res.status(400).json((error as Error).message);
     }
   }
 }
