@@ -5,7 +5,7 @@ create schema if not exists sep6;
 set SEARCH_PATH  to 'sep6';
 
 create table _user(
-    user_id SERIAL,
+    user_id SERIAL UNIQUE,
     username VARCHAR(100) not null,
     password VARCHAR(255) not null,
     email VARCHAR(250) constraint PROPER_EMAIL check (email ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]+$') primary key,
