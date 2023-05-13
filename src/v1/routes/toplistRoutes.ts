@@ -4,5 +4,6 @@ const router = express.Router();
 
 router.post('/:userId', toplistController.addMovieIdBasedOnUserId);
 router.get('/:userId', toplistController.getToplistBasedOnUserId);
+router.delete('/:userId', toplistController.deleteMovieFromToplist);
 
 export = router;

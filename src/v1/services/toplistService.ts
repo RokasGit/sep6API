@@ -1,5 +1,4 @@
 import toplistDB from "../../database/toplist"
-import { Movie } from "../../models/movie";
 //File change
 
 export default class ToplistService {
@@ -14,6 +13,14 @@ export default class ToplistService {
     static async getToplistBasedOnUser(userId : number) : Promise<String[]> {
         try{
             return await toplistDB.getToplistBasedOnUserId(userId);
+        }catch(error) {
+            console.log(error);
+            return [];
+        }
+    };
+    static async deleteMovieFromToplist(userId : number,  movieId : String) : Promise<String[]> {
+        try{
+            return await toplistDB.deleteMovieFromToplist(userId, movieId);
         }catch(error) {
             console.log(error);
             return [];
