@@ -1,12 +1,16 @@
 import { Request, Response } from "express";
 import reviewService from "../services/reviewService"
+import { Review } from "../../models/review";
+import { request } from "http";
 
 export default class ReviewController {
   static async addReview(req: Request, res: Response) {
     try {
+      const review:Review = req.body;
+         
       const responseFromDB = await reviewService.addReview(
         parseInt(req.params.userId),
-        req.body.review
+        review
       );
 
       if (responseFromDB) {
