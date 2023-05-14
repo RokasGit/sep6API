@@ -35,4 +35,37 @@ export default class ReviewData {
       throw error;
     }
   }
+
+  static async getReviewsBasedOnMovieId(movieId: string): Promise<Review[]> {
+    try {
+      const responses = await db.db('sep6.review').select('*').where('api_movie_id', movieId);
+
+      return responses.map(response => ({
+        userId: response.user_id,
+        movieId: response.api_movie_id,
+        ratting: response.ratting,
+        comment: response.comment,
+        date: response.date
+      }));
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  static async deleteReview(userId: number, movieId: string): Promise<boolean> {
+    try {
+      
+      const response = await db.db('sep6.review').where({
+        user_id: userId,
+        api_movie_id: movieId
+      }).del();
+
+    
+      return response > 0;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
 }

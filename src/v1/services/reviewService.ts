@@ -19,4 +19,22 @@ export default class ReviewService {
       throw error;
     }
   }
+
+  static async getReviewsBasedOnMovieId(movieId: string): Promise<Review[]> {
+    try {
+      return ReviewData.getReviewsBasedOnMovieId(movieId);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  static async deleteReview(userId: number, movieId: string): Promise<boolean> {
+    try {
+      return ReviewData.deleteReview(userId, movieId);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
 }
