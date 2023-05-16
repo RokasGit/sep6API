@@ -1,10 +1,17 @@
 import movieDB from "../../external/movie";
+import { Search } from "../../models/movie";
 
 export default class MovieService {
-  static async getAllMovies(): Promise<Array<String>> {
-    return ["Get All Movies"];
+  static async getMoviesByTitle(title: string): Promise<Search> {
+    try {
+      const movies = await movieDB.getMoviesByTitle(title);
+      return movies;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   }
-  static async getOneMovieByTitle(title: string): Promise<String> {
+  static async getOneMovieByTitle(title: string): Promise<string> {
     try {
       const movie = await movieDB.getOneMovieByTitle(title);
       return movie;
@@ -14,7 +21,7 @@ export default class MovieService {
     }
   }
 
-  static async getOneMovieById(movieId: String): Promise<String> {
+  static async getOneMovieById(movieId: string): Promise<string> {
     try {
       const movie = await movieDB.getOneMovieById(movieId);
       return movie;
