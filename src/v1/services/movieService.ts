@@ -1,4 +1,5 @@
 import movieDB from "../../external/movie";
+import { Toplist } from "../../models/toplist";
 
 export default class MovieService {
   static async getAllMovies(): Promise<Array<String>> {
@@ -18,6 +19,15 @@ export default class MovieService {
     try {
       const movie = await movieDB.getOneMovieById(movieId);
       return movie;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+  static async getMoviesArrayFromToplist(toplist: Toplist): Promise<Toplist> {
+    try {
+      const response = await movieDB.getMoviesArrayFromToplist(toplist);
+      return response;
     } catch (error) {
       console.log(error);
       throw error;
