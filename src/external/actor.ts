@@ -31,7 +31,6 @@ export default class ActorData {
   static async searchActor(query: string): Promise<Actor[]> {
     try {
       const url = `${db.TMDB_BASE_URL}/search/person?api_key=${db.TMDB_API_KEY}&query=${encodeURIComponent(query)}`;
-      console.log("url: " + url);
       const response = await axios.get(url);
       const data:any = response.data;
 

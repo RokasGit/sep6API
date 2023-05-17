@@ -3,6 +3,7 @@ import v1MovieRouter from "./v1/routes/movieRoutes";
 import v1ToplistRouter from "./v1/routes/toplistRoutes";
 import v1ActorRouter from "./v1/routes/actorRoutes";
 import v1UserRouter from "./v1/routes/userRoutes";
+import v1ReviewRouter from "./v1/routes/reviewRoutes";
 import cors from "cors";
 import bodyParser from "body-parser";
 
@@ -14,6 +15,7 @@ app.use("/bestmovies/v1/movies", v1MovieRouter);
 app.use("/bestmovies/v1/toplists", v1ToplistRouter);
 app.use("/bestmovies/v1/actors", v1ActorRouter);
 app.use("/bestmovies/v1/users", v1UserRouter);
+app.use("/bestmovies/v1/reviews", v1ReviewRouter)
 
 const port = process.env.PORT || 3000;
 
