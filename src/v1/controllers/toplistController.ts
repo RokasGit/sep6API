@@ -6,7 +6,7 @@ export default class ToplistController {
     static async addMovieIdBasedOnUserId(req: Request, res: Response) {
         const responseFromDB = await toplistService.addMovieIdBasedOnUser(
           parseInt(req.params.userId),
-          req.body.ID
+          req.body.imdbID
         );
         let responseBody;
         if (responseFromDB) {
@@ -33,7 +33,7 @@ export default class ToplistController {
     static async deleteMovieFromToplist(req: Request, res: Response) {
       const responseFromDB = await toplistService.deleteMovieFromToplist(
         parseInt(req.params.userId),
-        req.body.ID
+        req.body.imdbID
       );
       let responseBody: String[]= [];
       const promises: any[] = [];
