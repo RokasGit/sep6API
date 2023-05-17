@@ -6,7 +6,7 @@ import { User } from "../../models/user";
 export default class ToplistService {
   static async addMovieIdBasedOnUser(
     userId: number,
-    movieId: String
+    movieId: string
   ): Promise<boolean> {
     try {
       return await toplistDB.addMovieIdToToplist(userId, movieId);
@@ -15,7 +15,7 @@ export default class ToplistService {
       return false;
     }
   }
-  static async getToplistBasedOnUserId(userId: number): Promise<String[]> {
+  static async getToplistBasedOnUserId(userId: number): Promise<string[]> {
     try {
       return await toplistDB.getToplistBasedOnUserId(userId);
     } catch (error) {
@@ -25,8 +25,8 @@ export default class ToplistService {
   }
   static async deleteMovieFromToplist(
     userId: number,
-    movieId: String
-  ): Promise<String[]> {
+    movieId: string
+  ): Promise<string[]> {
     try {
       return await toplistDB.deleteMovieFromToplist(userId, movieId);
     } catch (error) {
@@ -42,4 +42,12 @@ export default class ToplistService {
       throw error;
     }
   }
+    static async isInToplist(userId : number,  movieId : string) : Promise<boolean> {
+        try{
+            return await toplistDB.isInToplist(userId, movieId);
+        }catch(error) {
+            console.log(error);
+            return false;
+        }
+    };
 }

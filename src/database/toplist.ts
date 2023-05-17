@@ -6,10 +6,10 @@ import db from "./index";
 export default class ToplistData {
   static async addMovieIdToToplist(
     userId: number,
-    movieId: String
+    movieId: string
   ): Promise<boolean> {
     try {
-      const response = await db.db("sep6.toplist").insert({
+      const response = await db.db("sep6.toplist").returning('*').insert({
         user_id: userId,
         imdb_movie_id: movieId,
       });
@@ -20,7 +20,7 @@ export default class ToplistData {
     }
   }
 
-  static async getToplistBasedOnUserId(userId: number): Promise<String[]> {
+  static async getToplistBasedOnUserId(userId: number): Promise<string[]> {
     try {
       const response = await db
         .db("sep6.toplist")
@@ -35,8 +35,8 @@ export default class ToplistData {
 
   static async deleteMovieFromToplist(
     userId: number,
-    movieId: String
-  ): Promise<String[]> {
+    movieId: string
+  ): Promise<string[]> {
     try {
       const deleting = await db
         .db("sep6.toplist")
@@ -97,6 +97,16 @@ export default class ToplistData {
     } catch (error) {
       console.log(error);
       throw error;
+  };
+  }
+  static async isInToplist(userId: number, movieId: string) : Promise<boolean> {
+    try {
+      const response = await db.db("sep6.toplist").where({ user_id: userId, imdb_movie_id: movieId })
+      .first();
+      return !!response;
+    }catch(error){
+      console.log(error);
+      return false;
     }
   }
 }
