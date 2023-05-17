@@ -16,7 +16,7 @@ export default class ToplistController {
         } else {
           responseBody = undefined;
         }
-        res.status(200).json(responseBody);
+        res.send({status: "OK", data: responseBody});
     };
     
     static async getToplistBasedOnUserId(req : Request, res : Response) {
