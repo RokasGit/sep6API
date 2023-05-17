@@ -24,7 +24,7 @@ export default class MovieController {
     const userID = parseFloat(req.params.userID);
     const responseBody = new Promise(async() => {
       movie.BelongsToToplist = await ToplistService.isInToplist(userID, movie.imdbID);
+      res.status(200).json(movie);
     });
-    res.status(200).json(movie);
   }
 }

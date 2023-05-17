@@ -44,7 +44,7 @@ export default class ToplistData {
     try {
       const response = await db.db("sep6.toplist").where({ user_id: userId, imdb_movie_id: movieId })
       .first();
-      return response;
+      return !!response;
     }catch(error){
       console.log(error);
       return false;
