@@ -31,9 +31,9 @@ export default class MovieService {
       throw error;
     }
   }
-  static async getMoviesArrayFromToplist(toplist: Toplist): Promise<Toplist> {
+  static async getMoviesArrayFromList(toplist: Toplist): Promise<Toplist> {
     try {
-      const response = await movieDB.getMoviesArrayFromToplist(toplist);
+      const response = await movieDB.getMoviesArrayFromList(toplist);
       return response;
     } catch (error) {
       console.log(error);

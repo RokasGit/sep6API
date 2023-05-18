@@ -77,7 +77,7 @@ export default class UserData {
             return "User could not be found";
           }
           return {
-            userId: rows[0].id,
+            userId: rows[0].user_id,
             username: rows[0].username,
             email: rows[0].email,
             password: rows[0].password,
