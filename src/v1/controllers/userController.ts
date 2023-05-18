@@ -21,6 +21,7 @@ export default class UserController {
         req.body.email,
         req.body.password
       );
+      console.log(JSON.stringify(responseFromDB));
       res.status(200).json(responseFromDB);
     } catch (error) {
       res.status(400).json((error as Error).message);

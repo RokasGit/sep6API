@@ -1,10 +1,11 @@
 import db from '../../database/user';
 import { Toplist } from '../../models/toplist';
 import { User } from '../../models/user';
+import { Watchlist } from '../../models/watchlist';
 import { use } from '../routes/movieRoutes';
 import movieService from './movieService';
 import toplistService from './toplistService';
-
+import WatchlistService from './watchlistService';
 export default class UserService {
   static async registerUser(
     username: string,
@@ -51,7 +52,7 @@ export default class UserService {
   }
   static async getProfileByUser(
     userId: number
-  ): Promise<{ user: User; toplist: Toplist } | string> {
+  ): Promise<{ user: User; toplist: Toplist; watchlist: Watchlist } | string> {
     try {
       const user = await db.getProfileById(userId);
       if (typeof user === 'string') {
@@ -59,9 +60,10 @@ export default class UserService {
       }
       if (user !== undefined && user !== null) {
         let toplist = await toplistService.getToplistBasedOnUser(user);
-        console.log(JSON.stringify(toplist));
-        toplist = await movieService.getMoviesArrayFromToplist(toplist);
-        return { user, toplist };
+        toplist = await movieService.getMoviesArrayFromList(toplist);
+        let watchlist = await WatchlistService.getWatchlistBasedOnUser(user);
+        watchlist = await movieService.getMoviesArrayFromList(watchlist);
+        return { user, toplist, watchlist };
       } else {
         throw Error('User not found');
       }
