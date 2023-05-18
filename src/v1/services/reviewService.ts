@@ -37,4 +37,13 @@ export default class ReviewService {
       throw error;
     }
   }
+
+  static async isReviewed(userId : number,  movieId : string) : Promise<Review | null> {
+    try{
+        return await ReviewData.isReviewed(userId, movieId);
+    }catch(error) {
+        console.log(error);
+        return null;
+    }
+};
 }
