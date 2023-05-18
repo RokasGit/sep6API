@@ -9,6 +9,7 @@ export default class ReviewData {
         api_movie_id: review.movieId,
         ratting: review.ratting,
         comment: review.comment,
+        movie_title: review.movieName, 
         date: review.date
       }).returning('review_id');
   
@@ -28,6 +29,7 @@ export default class ReviewData {
         movieId: response.api_movie_id,
         ratting: response.ratting,
         comment: response.comment,
+        movieName: response.movie_name,
         date: response.date
       }));
     } catch (error) {
@@ -45,6 +47,7 @@ export default class ReviewData {
         movieId: response.api_movie_id,
         ratting: response.ratting,
         comment: response.comment,
+        movieName: response.movie_name,
         date: response.date
       }));
     } catch (error) {
