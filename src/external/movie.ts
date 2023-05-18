@@ -23,22 +23,21 @@ export default class MovieData {
       throw error;
     }
   }
-  static async getMoviesArrayFromToplist(toplist: Toplist): Promise<Toplist> {
+  static async getMoviesArrayFromList(list: Toplist): Promise<Toplist> {
     try {
       const promises: any[] = [];
-      toplist.movieIds.forEach((movieId) => {
+      list.movieIds.forEach((movieId) => {
         promises.push(this.getOneMovieById(movieId));
       });
-      toplist.movies = await Promise.all(promises);
-      return toplist;
-    }
-    catch (error) {
+      list.movies = await Promise.all(promises);
+      return list;
+    } catch (error) {
       console.log(error);
       throw error;
     }
   }
 
-  static async getMoviesByTitle(title : string): Promise<Search> {
+  static async getMoviesByTitle(title: string): Promise<Search> {
     try {
       const response = await axios.get(`${db.OMDB_API_URL}s=${title}`);
       return response.data as any;
