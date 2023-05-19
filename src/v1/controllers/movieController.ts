@@ -10,7 +10,7 @@ export default class MovieController {
     try {
       const movies = await movieService.getMoviesByTitle(req.params.movieTitle);
       const userID = parseFloat(req.params.userID);
-      const review = await ReviewService.isReviewed(userID, movie.imdbID);
+      
 
       const modifiedObjects = await Promise.all(
         movies.Search.map(async (movie: Movie) => {
@@ -22,6 +22,8 @@ export default class MovieController {
             userID,
             movie.imdbID
           );
+
+          const review = await ReviewService.isReviewed(userID, movie.imdbID);
 
           if (review) {
             movie.review = review;
@@ -45,7 +47,7 @@ export default class MovieController {
         JSON.stringify(await movieService.getOneMovieById(req.params.imdbID))
       );
       const userID = parseFloat(req.params.userID);
-      const review = await ReviewService.isReviewed(userID, movie.imdbID);
+      
 
       const responseBody = new Promise(async () => {
         movie.BelongsToToplist = await ToplistService.isInToplist(
@@ -57,6 +59,7 @@ export default class MovieController {
           movie.imdbID
         );
 
+        const review = await ReviewService.isReviewed(userID, movie.imdbID);
         if (review) {
           movie.review = review;
         }
