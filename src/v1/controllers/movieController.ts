@@ -74,12 +74,4 @@ export default class MovieController {
     }
   }
 
-  static async getOneMovieById(req: Request, res: Response): Promise<void> {
-    const movie = JSON.parse(JSON.stringify(await movieService.getOneMovieById(req.params.imdbID)));
-    const userID = parseFloat(req.params.userID);
-    const responseBody = new Promise(async() => {
-      movie.BelongsToToplist = await ToplistService.isInToplist(userID, movie.imdbID);
-      res.status(200).json(movie);
-    });
-  }
 }
