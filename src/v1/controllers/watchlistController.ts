@@ -1,20 +1,19 @@
 import { Request, Response } from "express";
-import toplistService from "../services/toplistService";
+import watchlistService from "../services/watchlistService";
 import movieService from "../services/movieService";
-import WatchlistService from "../services/watchlistService";
-import { Movie } from "../../models/movie";
+import ToplistService from "../services/toplistService";
 
-export default class ToplistController {
+export default class WatchlistController {
   static async addMovieIdBasedOnUserId(req: Request, res: Response) {
     try {
-      const responseFromDB = await toplistService.addMovieIdBasedOnUser(
+      const responseFromDB = await watchlistService.addMovieIdBasedOnUser(
         parseInt(req.params.userId),
         req.body.imdbID
       );
       let responseBody;
       if (responseFromDB) {
         let body = req.body;
-        body.BelongsToToplist = true;
+        body.BelongsToWatchlist = true;
         responseBody = body;
       } else {
         responseBody = undefined;
@@ -25,12 +24,12 @@ export default class ToplistController {
     }
   }
 
-  static async getToplistBasedOnUserId(req: Request, res: Response) {
+  static async getWatchlistBasedOnUserId(req: Request, res: Response) {
     try {
-      const responseFromDB = await toplistService.getToplistBasedOnUserId(
+      const responseFromDB = await watchlistService.getWatchlistBasedOnUserId(
         parseInt(req.params.userId)
       );
-      let responseBody: string[] = [];
+      let responseBody: String[] = [];
       const promises: any[] = [];
       responseFromDB.forEach((movieId) => {
         promises.push(
@@ -41,7 +40,7 @@ export default class ToplistController {
       const modifiedObjects = await Promise.all(
         responseBody.map(async (movie) => {
           const JSONobject = JSON.parse(JSON.stringify(movie));
-          JSONobject.BelongsToWatchlist = await WatchlistService.isInWatchlist(
+          JSONobject.BelongsToToplist = await ToplistService.isInToplist(
             parseInt(req.params.userId),
             JSONobject.imdbID
           );
@@ -54,28 +53,13 @@ export default class ToplistController {
     }
   }
 
-  // static async getToplistBasedOnUserId(req: Request, res: Response) {
-  //   const responseFromDB = await toplistService.getToplistBasedOnUserId(
-  //     parseInt(req.params.userId)
-  //   );
-  //   let responseBody: string[] = [];
-  //   const promises: any[] = [];
-  //   responseFromDB.forEach((movieId) => {
-  //     promises.push(
-  //       movieService.getOneMovieById(Object.entries(movieId)[0][1])
-  //     );
-  //   });
-  //   responseBody = await Promise.all(promises);
-  //   res.send({ status: "OK", data: responseBody });
-  // }
-
-  static async deleteMovieFromToplist(req: Request, res: Response) {
+  static async deleteMovieFromWatchlist(req: Request, res: Response) {
     try {
-      const responseFromDB = await toplistService.deleteMovieFromToplist(
+      const responseFromDB = await watchlistService.deleteMovieFromWatchlist(
         parseInt(req.params.userId),
         req.body.imdbID
       );
-      let responseBody: string[] = [];
+      let responseBody: String[] = [];
       const promises: any[] = [];
       responseFromDB.forEach((movieId) => {
         promises.push(

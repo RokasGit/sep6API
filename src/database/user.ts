@@ -23,6 +23,7 @@ export default class UserData {
             return 'User could not be registered';
           }
           return {
+            userId: rows[0].user_id,
             username: rows[0].username,
             email: rows[0].email,
             password: rows[0].password,
@@ -81,6 +82,63 @@ export default class UserData {
             email: rows[0].email,
             password: rows[0].password,
           };
+        })
+        .catch((e) => {
+          console.log(e);
+          return e.detail;
+        });
+      return response;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+  static async getProfileById(userId: number): Promise<User | string> {
+    try {
+      console.log(userId);
+      const response = await db
+        .db('sep6._user')
+        .select('*')
+        .where('user_id', userId)
+        .then((rows) => {
+          if (rows === undefined || rows.length == 0) {
+            return 'User could not be found';
+          }
+          return {
+            userId: rows[0].user_id,
+            username: rows[0].username,
+            email: 'none',
+            password: 'none',
+          };
+        })
+        .catch((e) => {
+          console.log(e);
+          return e.detail;
+        });
+      return response;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  static async getUsers(): Promise<User[] | string> {
+    try {
+      const response = await db
+        .db('sep6._user')
+        .select('*')
+        .then((rows) => {
+          if (rows === undefined || rows.length == 0) {
+            return 'No users found';
+          }
+          return rows.map((row) => {
+            return {
+              userId: row.user_id,
+              username: row.username,
+              email: row.email,
+              password: row.password,
+            };
+          });
         })
         .catch((e) => {
           console.log(e);
