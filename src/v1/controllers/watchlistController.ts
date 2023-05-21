@@ -18,7 +18,7 @@ export default class WatchlistController {
       } else {
         responseBody = undefined;
       }
-      res.send({ status: "OK", data: responseBody });
+      res.status(200).json(responseBody);
     } catch (error) {
       res.status(400).json((error as Error).message);
     }
@@ -47,7 +47,7 @@ export default class WatchlistController {
           return JSONobject;
         })
       );
-      res.send({ status: "OK", data: modifiedObjects });
+      res.status(200).json(responseBody);
     } catch (error) {
       res.status(400).json((error as Error).message);
     }

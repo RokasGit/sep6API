@@ -8,7 +8,6 @@ export default class MovieService {
       const movies = await movieDB.getMoviesByTitle(title);
       return movies;
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
@@ -17,7 +16,6 @@ export default class MovieService {
       const movie = await movieDB.getOneMovieByTitle(title);
       return movie;
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
@@ -27,7 +25,6 @@ export default class MovieService {
       const movie = await movieDB.getOneMovieById(movieId);
       return movie;
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
@@ -36,7 +33,6 @@ export default class MovieService {
       const response = await movieDB.getMoviesArrayFromList(toplist);
       return response;
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }

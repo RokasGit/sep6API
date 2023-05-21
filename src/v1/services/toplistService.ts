@@ -11,16 +11,14 @@ export default class ToplistService {
     try {
       return await toplistDB.addMovieIdToToplist(userId, movieId);
     } catch (error) {
-      console.log(error);
-      return false;
+      throw error;
     }
   }
   static async getToplistBasedOnUserId(userId: number): Promise<string[]> {
     try {
       return await toplistDB.getToplistBasedOnUserId(userId);
     } catch (error) {
-      console.log(error);
-      return [];
+      throw error;
     }
   }
   static async deleteMovieFromToplist(
@@ -30,8 +28,7 @@ export default class ToplistService {
     try {
       return await toplistDB.deleteMovieFromToplist(userId, movieId);
     } catch (error) {
-      console.log(error);
-      return [];
+      throw error;
     }
   }
   static async getToplistBasedOnUser(user: User): Promise<Toplist> {
@@ -42,12 +39,11 @@ export default class ToplistService {
       throw error;
     }
   }
-    static async isInToplist(userId : number,  movieId : string) : Promise<boolean> {
-        try{
-            return await toplistDB.isInToplist(userId, movieId);
-        }catch(error) {
-            console.log(error);
-            return false;
-        }
-    };
+  static async isInToplist(userId: number, movieId: string): Promise<boolean> {
+    try {
+      return await toplistDB.isInToplist(userId, movieId);
+    } catch (error) {
+      throw error;
+    }
+  }
 }
