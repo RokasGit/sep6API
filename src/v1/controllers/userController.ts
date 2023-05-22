@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
-import userService from '../services/userService';
+import { Request, Response } from "express";
+import userService from "../services/userService";
 
 export default class UserController {
   static async registerUser(req: Request, res: Response): Promise<void> {
@@ -9,9 +9,13 @@ export default class UserController {
         req.body.password,
         req.body.email
       );
-      res.status(200).json(responseFromDB);
+      res.status(201).json(responseFromDB);
     } catch (error) {
-      res.status(400).json((error as Error).message);
+      if ((error as Error).message === "User could not be registered") {
+        res.status(400).json((error as Error).message);
+      } else {
+        res.status(500).json((error as Error).message);
+      }
     }
   }
 
@@ -21,10 +25,16 @@ export default class UserController {
         req.body.email,
         req.body.password
       );
-      console.log(JSON.stringify(responseFromDB));
       res.status(200).json(responseFromDB);
     } catch (error) {
-      res.status(400).json((error as Error).message);
+      if (
+        (error as Error).message === "Email does not exist" ||
+        (error as Error).message === "Password is incorrect"
+      ) {
+        res.status(400).json((error as Error).message);
+      } else {
+        res.status(500).json((error as Error).message);
+      }
     }
   }
   static async getProfileByUser(req: Request, res: Response): Promise<void> {
@@ -33,7 +43,15 @@ export default class UserController {
       const responseFromService = await userService.getProfileByUser(userId);
       res.status(200).json(responseFromService);
     } catch (error) {
-      res.status(400).json((error as Error).message);
+      if (
+        (error as Error).message === "User could not be found" ||
+        (error as Error).message === "No toplist found" ||
+        (error as Error).message === "No watchlist found"
+      ) {
+        res.status(400).json((error as Error).message);
+      } else {
+        res.status(500).json((error as Error).message);
+      }
     }
   }
 
@@ -42,7 +60,11 @@ export default class UserController {
       const responseFromService = await userService.getUsers();
       res.status(200).json(responseFromService);
     } catch (error) {
-      res.status(400).json((error as Error).message);
+      if ((error as Error).message === "No users found") {
+        res.status(400).json((error as Error).message);
+      } else {
+        res.status(500).json((error as Error).message);
+      }
     }
   }
 }

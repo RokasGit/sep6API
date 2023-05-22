@@ -15,7 +15,7 @@ export default class WatchlistData {
       return response.length > 0;
     } catch (error) {
       console.log(error);
-      return false;
+      throw error;
     }
   }
 
@@ -28,7 +28,7 @@ export default class WatchlistData {
       return response;
     } catch (error) {
       console.log(error);
-      return [];
+      throw error;
     }
   }
 
@@ -52,7 +52,7 @@ export default class WatchlistData {
       }
     } catch (error) {
       console.log(error);
-      return [];
+      throw error;
     }
   }
   static async getWatchlistBasedOnUser(user: User): Promise<Watchlist> {
@@ -85,11 +85,14 @@ export default class WatchlistData {
           if (error.message == "No user found") {
             throw new Error("No user found");
           }
-          const watchlist: Watchlist = {
-            userId: user.userId,
-            movieIds: movieIds,
-          };
-          return watchlist;
+          if (error.message == "No watchlist found") {
+            const watchlist: Watchlist = {
+              userId: user.userId,
+              movieIds: movieIds,
+            };
+            return watchlist;
+          }
+          throw error;
         });
 
       return response;
@@ -110,7 +113,7 @@ export default class WatchlistData {
       return !!response;
     } catch (error) {
       console.log(error);
-      return false;
+      throw error;
     }
   }
 }

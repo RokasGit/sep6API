@@ -1,26 +1,26 @@
-import db from './index';
-import { User } from '../models/user';
-import e from 'express';
+import db from "./index";
+import { User } from "../models/user";
+import e from "express";
 
 export default class UserData {
   static async registerUser(
     username: string,
     password: string,
     email: string
-  ): Promise<User | string> {
+  ): Promise<User> {
     try {
       const response = await db
-        .db('sep6._user')
+        .db("sep6._user")
         .insert({
           username: username,
           password: password,
           email: email,
         })
-        .returning('*')
+        .returning("*")
         .then((rows) => {
           console.log(rows);
           if (rows === undefined || rows.length == 0) {
-            return 'User could not be registered';
+            throw Error("User could not be registered");
           }
           return {
             userId: rows[0].user_id,
@@ -28,10 +28,6 @@ export default class UserData {
             email: rows[0].email,
             password: rows[0].password,
           };
-        })
-        .catch((e) => {
-          console.log(e);
-          return e.detail;
         });
       return response;
     } catch (error) {
@@ -42,18 +38,14 @@ export default class UserData {
   static async checkIfEmailExists(email: string): Promise<boolean> {
     try {
       const response = await db
-        .db('sep6._user')
-        .select('*')
-        .where('email', '=', email)
+        .db("sep6._user")
+        .select("*")
+        .where("email", "=", email)
         .then((rows) => {
           if (rows === undefined || rows.length == 0) {
             return false;
           }
           return true;
-        })
-        .catch((e) => {
-          console.log(e);
-          return false;
         });
       return response;
     } catch (error) {
@@ -68,13 +60,13 @@ export default class UserData {
   ): Promise<User | string> {
     try {
       const response = await db
-        .db('sep6._user')
-        .select('*')
-        .where('email', '=', email)
-        .andWhere('password', '=', password)
+        .db("sep6._user")
+        .select("*")
+        .where("email", "=", email)
+        .andWhere("password", "=", password)
         .then((rows) => {
           if (rows === undefined || rows.length == 0) {
-            return 'User could not be found';
+            throw Error("Password is incorrect");
           }
           return {
             userId: rows[0].user_id,
@@ -82,10 +74,6 @@ export default class UserData {
             email: rows[0].email,
             password: rows[0].password,
           };
-        })
-        .catch((e) => {
-          console.log(e);
-          return e.detail;
         });
       return response;
     } catch (error) {
@@ -93,27 +81,23 @@ export default class UserData {
       throw error;
     }
   }
-  static async getProfileById(userId: number): Promise<User | string> {
+  static async getProfileById(userId: number): Promise<User> {
     try {
       console.log(userId);
       const response = await db
-        .db('sep6._user')
-        .select('*')
-        .where('user_id', userId)
+        .db("sep6._user")
+        .select("*")
+        .where("user_id", userId)
         .then((rows) => {
           if (rows === undefined || rows.length == 0) {
-            return 'User could not be found';
+            throw Error("User could not be found");
           }
           return {
             userId: rows[0].user_id,
             username: rows[0].username,
-            email: 'none',
-            password: 'none',
+            email: "none",
+            password: "none",
           };
-        })
-        .catch((e) => {
-          console.log(e);
-          return e.detail;
         });
       return response;
     } catch (error) {
@@ -122,14 +106,14 @@ export default class UserData {
     }
   }
 
-  static async getUsers(): Promise<User[] | string> {
+  static async getUsers(): Promise<User[]> {
     try {
       const response = await db
-        .db('sep6._user')
-        .select('*')
+        .db("sep6._user")
+        .select("*")
         .then((rows) => {
           if (rows === undefined || rows.length == 0) {
-            return 'No users found';
+            throw Error("No users found");
           }
           return rows.map((row) => {
             return {
@@ -139,10 +123,6 @@ export default class UserData {
               password: row.password,
             };
           });
-        })
-        .catch((e) => {
-          console.log(e);
-          return e.detail;
         });
       return response;
     } catch (error) {

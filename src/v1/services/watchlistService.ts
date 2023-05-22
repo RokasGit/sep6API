@@ -11,16 +11,14 @@ export default class WatchlistService {
     try {
       return await watchlistDB.addMovieIdToWatchlist(userId, movieId);
     } catch (error) {
-      console.log(error);
-      return false;
+      throw error;
     }
   }
   static async getWatchlistBasedOnUserId(userId: number): Promise<string[]> {
     try {
       return await watchlistDB.getWatchlistBasedOnUserId(userId);
     } catch (error) {
-      console.log(error);
-      return [];
+      throw error;
     }
   }
   static async deleteMovieFromWatchlist(
@@ -30,7 +28,6 @@ export default class WatchlistService {
     try {
       return await watchlistDB.deleteMovieFromWatchlist(userId, movieId);
     } catch (error) {
-      console.log(error);
       return [];
     }
   }
@@ -49,7 +46,6 @@ export default class WatchlistService {
     try {
       return await watchlistDB.isInWatchlist(userId, movieId);
     } catch (error) {
-      console.log(error);
       return false;
     }
   }

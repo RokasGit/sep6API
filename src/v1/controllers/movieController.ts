@@ -10,7 +10,6 @@ export default class MovieController {
     try {
       const movies = await movieService.getMoviesByTitle(req.params.movieTitle);
       const userID = parseFloat(req.params.userID);
-      
 
       const modifiedObjects = await Promise.all(
         movies.Search.map(async (movie: Movie) => {
@@ -35,9 +34,7 @@ export default class MovieController {
       res.status(200).json(modifiedObjects);
     } catch (error) {
       console.error(error);
-      res
-        .status(500)
-        .json({ message: "An error occurred while searching for the movie." });
+      res.status(400).json(error);
     }
   }
 
@@ -47,7 +44,6 @@ export default class MovieController {
         JSON.stringify(await movieService.getOneMovieById(req.params.imdbID))
       );
       const userID = parseFloat(req.params.userID);
-      
 
       const responseBody = new Promise(async () => {
         movie.BelongsToToplist = await ToplistService.isInToplist(
@@ -67,11 +63,7 @@ export default class MovieController {
         res.status(200).json(movie);
       });
     } catch (error) {
-      console.error(error);
-      res
-        .status(500)
-        .json({ message: "An error occurred while searching for the movie." });
+      res.status(400).json(error);
     }
   }
-
 }

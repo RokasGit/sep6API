@@ -9,14 +9,14 @@ export default class ToplistData {
     movieId: string
   ): Promise<boolean> {
     try {
-      const response = await db.db("sep6.toplist").returning('*').insert({
+      const response = await db.db("sep6.toplist").returning("*").insert({
         user_id: userId,
         imdb_movie_id: movieId,
       });
       return response.length > 0;
     } catch (error) {
       console.log(error);
-      return false;
+      throw error;
     }
   }
 
@@ -29,7 +29,7 @@ export default class ToplistData {
       return response;
     } catch (error) {
       console.log(error);
-      return [];
+      throw error;
     }
   }
 
@@ -53,7 +53,7 @@ export default class ToplistData {
       }
     } catch (error) {
       console.log(error);
-      return [];
+      throw error;
     }
   }
   static async getToplistBasedOnUser(user: User): Promise<Toplist> {
@@ -86,27 +86,33 @@ export default class ToplistData {
           if (error.message == "No user found") {
             throw new Error("No user found");
           }
-          const toplist: Toplist = {
-            userId: user.userId,
-            movieIds: movieIds,
-          };
-          return toplist;
+          if (error.message == "No toplist found") {
+            const toplist: Toplist = {
+              userId: user.userId,
+              movieIds: movieIds,
+            };
+            return toplist;
+          } else {
+            throw error;
+          }
         });
 
       return response;
     } catch (error) {
       console.log(error);
       throw error;
-  };
+    }
   }
-  static async isInToplist(userId: number, movieId: string) : Promise<boolean> {
+  static async isInToplist(userId: number, movieId: string): Promise<boolean> {
     try {
-      const response = await db.db("sep6.toplist").where({ user_id: userId, imdb_movie_id: movieId })
-      .first();
+      const response = await db
+        .db("sep6.toplist")
+        .where({ user_id: userId, imdb_movie_id: movieId })
+        .first();
       return !!response;
-    }catch(error){
+    } catch (error) {
       console.log(error);
-      return false;
+      throw error;
     }
   }
 }

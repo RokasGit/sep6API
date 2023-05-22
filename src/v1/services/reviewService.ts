@@ -6,7 +6,6 @@ export default class ReviewService {
     try {
       return ReviewData.addReviewToDb(userId, review);
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
@@ -15,7 +14,6 @@ export default class ReviewService {
     try {
       return ReviewData.getReviewsBasedOnUserId(userId);
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
@@ -24,7 +22,6 @@ export default class ReviewService {
     try {
       return ReviewData.getReviewsBasedOnMovieId(movieId);
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
@@ -33,17 +30,18 @@ export default class ReviewService {
     try {
       return ReviewData.deleteReview(userId, movieId);
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
 
-  static async isReviewed(userId : number,  movieId : string) : Promise<Review | null> {
-    try{
-        return await ReviewData.isReviewed(userId, movieId);
-    }catch(error) {
-        console.log(error);
-        return null;
+  static async isReviewed(
+    userId: number,
+    movieId: string
+  ): Promise<Review | null> {
+    try {
+      return await ReviewData.isReviewed(userId, movieId);
+    } catch (error) {
+      throw error;
     }
-};
+  }
 }
