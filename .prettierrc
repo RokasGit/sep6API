@@ -18,6 +18,5 @@
     "trailingComma": "es5",
     "useTabs": false,
     "vueIndentScriptAndStyle": false,
-    "filepath": "/Users/rokaspaulauskas/Developer/sep6API/src/database/user.ts",
     "parser": "typescript"
   }
