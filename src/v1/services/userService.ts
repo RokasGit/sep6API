@@ -6,6 +6,8 @@ import { use } from "../routes/movieRoutes";
 import movieService from "./movieService";
 import toplistService from "./toplistService";
 import WatchlistService from "./watchlistService";
+import reviewService from "./reviewService";
+import { Review } from "../../models/review";
 export default class UserService {
   static async registerUser(
     username: string,
@@ -50,9 +52,12 @@ export default class UserService {
     }
     return user;
   }
-  static async getProfileByUser(
-    userId: number
-  ): Promise<{ user: User; toplist: Toplist; watchlist: Watchlist }> {
+  static async getProfileByUser(userId: number): Promise<{
+    user: User;
+    toplist: Toplist;
+    watchlist: Watchlist;
+    reviews: Review[];
+  }> {
     try {
       const user = await db.getProfileById(userId);
       if (user !== undefined && user !== null) {
@@ -60,7 +65,10 @@ export default class UserService {
         toplist = await movieService.getMoviesArrayFromList(toplist);
         let watchlist = await WatchlistService.getWatchlistBasedOnUser(user);
         watchlist = await movieService.getMoviesArrayFromList(watchlist);
-        return { user, toplist, watchlist };
+        const reviews = await reviewService.getReviewsBasedOnUserId(
+          user.userId ?? -1
+        );
+        return { user, toplist, watchlist, reviews };
       } else {
         throw Error("User not found");
       }
