@@ -88,4 +88,16 @@ export default class UserService {
       throw error;
     }
   }
+
+  static async getUserById(userId: number): Promise<User> {
+    try {
+      const user = await db.getUserById(userId);
+      if (typeof user === "string") {
+        throw Error(user);
+      }
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
 }

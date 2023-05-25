@@ -67,4 +67,19 @@ export default class UserController {
       }
     }
   }
+
+  static async getUserById(req: Request, res: Response): Promise<void> {
+    try {
+      const responseFromService = await userService.getUserById(
+        parseInt(req.params.userId)
+      );
+      res.status(200).json(responseFromService);
+    } catch (error) {
+      if ((error as Error).message === "User could not be found") {
+        res.status(400).json((error as Error).message);
+      } else {
+        res.status(500).json((error as Error).message);
+      }
+    }
+  }
 }

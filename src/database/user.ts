@@ -130,4 +130,28 @@ export default class UserData {
       throw error;
     }
   }
+
+  static async getUserById(userId: number): Promise<User> {
+    try {
+      const response = await db
+        .db("sep6._user")
+        .select("*")
+        .where("user_id", userId)
+        .then((rows) => {
+          if (rows === undefined || rows.length == 0) {
+            throw Error("User could not be found");
+          }
+          return {
+            userId: rows[0].user_id,
+            username: rows[0].username,
+            email: rows[0].email,
+            password: rows[0].password,
+          };
+        });
+      return response;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
 }
