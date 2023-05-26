@@ -54,10 +54,7 @@ export default class UserData {
     }
   }
 
-  static async loginUser(
-    email: string,
-    password: string
-  ): Promise<User | string> {
+  static async loginUser(email: string, password: string): Promise<User> {
     try {
       const response = await db
         .db("sep6._user")
