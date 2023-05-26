@@ -47,9 +47,6 @@ export default class UserService {
       throw Error("Email does not exist");
     }
     const user = await db.loginUser(email, password);
-    if (typeof user === "string") {
-      throw Error(user);
-    }
     return user;
   }
   static async getProfileByUser(userId: number): Promise<{
@@ -80,9 +77,6 @@ export default class UserService {
   static async getUsers(): Promise<User[]> {
     try {
       const users = await db.getUsers();
-      if (typeof users === "string") {
-        throw Error(users);
-      }
       return users;
     } catch (error) {
       throw error;
@@ -92,9 +86,6 @@ export default class UserService {
   static async getUserById(userId: number): Promise<User> {
     try {
       const user = await db.getUserById(userId);
-      if (typeof user === "string") {
-        throw Error(user);
-      }
       return user;
     } catch (error) {
       throw error;
