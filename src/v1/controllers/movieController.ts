@@ -33,7 +33,6 @@ export default class MovieController {
       );
       res.status(200).json(modifiedObjects);
     } catch (error) {
-      console.error(error);
       res.status(400).json(error);
     }
   }
