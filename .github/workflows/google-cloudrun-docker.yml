@@ -49,7 +49,7 @@ on:
 env:
   PROJECT_ID: ${{ secrets.PROJECT_ID}} # TODO: update Google Cloud project id
   GAR_LOCATION: europe # TODO: update Artifact Registry location
-  SERVICE: 'bestmovies-api' # TODO: update Cloud Run service name
+  SERVICE: 'eu.gcr.io/best-movies-app' # TODO: update Cloud Run service name
   REGION: eu-west1 # TODO: update Cloud Run service region
 
 jobs:
