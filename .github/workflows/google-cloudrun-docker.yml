@@ -50,8 +50,8 @@ env:
   PROJECT_ID: ${{ secrets.PROJECT_ID}} # Google Cloud project id
   GAR_LOCATION: europe # Artifact Registry location
   GAR_REPOSITORY: eu.gcr.io
-  SERVICE: random # Cloud Run service name
-  REGION: eu-west1 # Cloud Run service region
+  SERVICE: best-movies-api # Cloud Run service name
+  REGION: europe-west1 # Cloud Run service region
 
 jobs:
   deploy:
