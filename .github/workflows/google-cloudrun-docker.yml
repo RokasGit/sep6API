@@ -84,6 +84,9 @@ jobs:
         id: env-file
         run: |-
           touch .env || echo "${{ secrets.ENV_FILE }}" > .env
+          cat .env
+          pwd .env
+          pwd README.md
           
 #       - name: Check env file
 #         id: env-check
