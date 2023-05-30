@@ -83,9 +83,7 @@ jobs:
       - name: Create env file
         id: env-file
         run: |-
-          cat .env || echo "failed"
-          echo "${{ secrets.ENV_FILE }}" > ./.env || echo "creation failed"
-          cat .env || echo "failed after"
+          touch .env || echo "${{ secrets.ENV_FILE }}" > .env
           
       - name: Check env file
         id: env-check
