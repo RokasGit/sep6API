@@ -49,6 +49,7 @@ on:
 env:
   PROJECT_ID: ${{ secrets.PROJECT_ID}} # Google Cloud project id
   GAR_LOCATION: europe # Artifact Registry location
+  ENV_FILE: ${{ secrets.ENV_FILE }} # Base64 encoded .env file
   GAR_REPOSITORY: eu.gcr.io
   SERVICE: best-movies-api # Cloud Run service name
   REGION: europe-west1 # Cloud Run service region
@@ -72,6 +73,18 @@ jobs:
           token_format: 'access_token'
           workload_identity_provider: '${{ secrets.WIF_PROVIDER }}' # e.g. - projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider
           service_account: '${{ secrets.WIF_SERVICE_ACCOUNT }}' # e.g. - my-service-account@my-project.iam.gserviceaccount.com
+
+      # create env file from base64 encoded secret
+      - name : Create env file
+        run: |
+          echo ${{ secrets.ENV_FILE }} | base64 --decode > ./.env
+      
+      - name : Check if env file is not empty
+        run: |
+          if [[ -z $(cat ./.env) ]]; then
+            echo "Env file is empty"
+            exit 1
+          fi
 
       # BEGIN - Docker auth and build (NOTE: If you already have a container image, these Docker steps can be omitted)
 
