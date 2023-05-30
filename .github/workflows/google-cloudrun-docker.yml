@@ -81,12 +81,12 @@ jobs:
       #     credentials_json: '${{ secrets.GCP_CREDENTIALS }}''
       
       - name: Create env file
-      - id: env-file
+        id: env-file
         run: |-
           echo "${{ secrets.ENV_FILE }}" > .env
           
       - name: Check env file
-      - id: env-check
+        id: env-check
         run: |-
           if [[ -z $(cat .env) ]]; then exit 1; fi
 
