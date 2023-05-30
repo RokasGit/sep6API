@@ -88,7 +88,7 @@ jobs:
       - name: Check env file
       - id: env-check
       - run: |
-          if [[ -z $(echo .env) ]]; then exit 1; fi
+          if [[ -z $(cat .env) ]]; then exit 1; fi
 
       # BEGIN - Docker auth and build (NOTE: If you already have a container image, these Docker steps can be omitted)
 
