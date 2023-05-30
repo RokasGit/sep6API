@@ -49,7 +49,7 @@ on:
 env:
   PROJECT_ID: ${{ secrets.PROJECT_ID}} # Google Cloud project id
   GAR_LOCATION: europe # Artifact Registry location
-  ENV_FILE: "${{ secrets.ENV_FILE }} | base64 -d" # env file
+  ENV_FILE: "${{ secrets.ENV_FILE }}" # env file
   GAR_REPOSITORY: eu.gcr.io
   SERVICE: best-movies-api # Cloud Run service name
   REGION: europe-west1 # Cloud Run service region
@@ -77,7 +77,7 @@ jobs:
       # create env file from base64 encoded secret
       - name : Create env file
         run: |-
-          echo "${{ env.ENV_FILE }}" > ./.env
+          echo "${{ env.ENV_FILE }}" | base64 -d > ./.env
       
       - name : Check if env file is not empty
         run: |-
