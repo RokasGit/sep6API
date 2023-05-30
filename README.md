@@ -37,4 +37,4 @@ docker-compose start
 
 ### If want to stop the container:
 
-docker-compose stop
+docker-compose down
